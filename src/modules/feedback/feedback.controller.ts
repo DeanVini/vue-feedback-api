@@ -1,8 +1,9 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 import { FeedbackService } from './feedback.service';
 import { NewFeedbackDto } from './dto/new-feedback.dto';
+import { UpdateFeedbackDto } from './dto/update-feedback.dto';
 
-@Controller('feedback')
+@Controller('feedbacks')
 export class FeedbackController {
   constructor(private readonly feedbackService: FeedbackService) {}
 
@@ -19,5 +20,10 @@ export class FeedbackController {
   @Get(':id')
   async findOne(@Param('id') id: number) {
     return this.feedbackService.findOne(id);
+  }
+
+  @Patch(':id')
+  async update(@Param('id') id: number, @Body() updateFeedbackDto: UpdateFeedbackDto) {
+    return this.feedbackService.update(id, updateFeedbackDto)
   }
 }
