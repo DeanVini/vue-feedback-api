@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
 import { FeedbackService } from './feedback.service';
 import { NewFeedbackDto } from './dto/new-feedback.dto';
 import { UpdateFeedbackDto } from './dto/update-feedback.dto';
@@ -13,8 +13,9 @@ export class FeedbackController {
   }
 
   @Get()
-  async findAll() {
-    return this.feedbackService.findAll();
+  async findAll(@Query('limit') limit: number, @Query('page') page: number) {
+    console.log(`Fetching feedbacks with limit: ${limit}, page: ${page}`);
+    return this.feedbackService.findAll(limit, page);
   }
 
   @Get(':id')

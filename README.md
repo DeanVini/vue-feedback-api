@@ -21,17 +21,89 @@
   <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
+## Configuração do Ambiente
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+### Arquivo .env
 
-## Project setup
+O projeto utiliza variáveis de ambiente para configuração. Um arquivo `.env.example` está disponível na raiz do projeto como modelo.
+
+1. Copie o arquivo `.env.example` para criar seu próprio arquivo `.env`:
 
 ```bash
-$ npm install
+$ cp .env.example .env
 ```
 
-## Compile and run the project
+2. Edite o arquivo `.env` conforme necessário, especialmente as configurações do banco de dados:
+
+```
+# Configuração do Banco de Dados
+DATABASE_HOST=localhost
+DATABASE_PORT=5432
+DATABASE_USER=postgres
+DATABASE_PASSWORD=sua_senha
+DATABASE_NAME=feedback_api
+DATABASE_SCHEMA=public
+
+# Outras configurações da aplicação
+PORT=3000
+```
+Caso for rodar via Docker, você irá precisar apenas alterar apenas DATABASE_PASSWORD e DATABASE_NAME.
+
+## Executando com Docker
+
+A maneira mais simples de executar o projeto é usando Docker, que já configura todos os serviços necessários.
+
+### Pré-requisitos
+- [Docker](https://www.docker.com/get-started)
+
+### Comandos
+
+1. Construa e inicie os containers:
+
+```bash
+$ docker compose up 
+```
+
+2. Para parar os containers:
+
+```bash
+$ docker-compose down
+```
+
+O Docker Compose irá configurar:
+- A aplicação NestJS
+- Um banco de dados PostgreSQL
+- Todas as dependências necessárias
+
+Os serviços estarão disponíveis em:
+- API: http://localhost:3000
+- PostgreSQL: localhost:5432
+
+## Executando Localmente
+
+Para executar o projeto sem Docker, siga estas etapas:
+
+### Pré-requisitos
+- Node.js (versão 14 ou superior)
+- npm ou yarn
+- PostgreSQL instalado e rodando
+
+### Configuração do Banco de Dados PostgreSQL
+
+1. Instale o PostgreSQL caso ainda não tenha:
+   - [Download PostgreSQL](https://www.postgresql.org/download/)
+
+2. Crie um banco de dados para a aplicação:
+
+```sql
+CREATE DATABASE feedback_api;
+```
+
+3. Certifique-se de que as credenciais e informações do banco estão corretamente configuradas no arquivo `.env`.
+
+### Executando a Aplicação
+
+Com o banco de dados configurado e o arquivo `.env` pronto:
 
 ```bash
 # development

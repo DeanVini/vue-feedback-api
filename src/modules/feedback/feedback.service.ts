@@ -31,7 +31,17 @@ export class FeedbackService {
       .take(limit)
 
     const { entities } = await query.getRawAndEntities()
-    const pageMetaDto = new PageMetaDto({ page, limit, itemCount });
+
+    const avgRatingResult = await this.feedbackRepository
+      .createQueryBuilder('feedback')
+      .select('AVG(feedback.rating)', 'averageRating')
+      .getRawOne();
+
+    const averageRating = avgRatingResult?.averageRating
+      ? parseFloat(avgRatingResult.averageRating)
+      : 0;
+
+    const pageMetaDto = new PageMetaDto({ page, limit, itemCount, averageRating });
 
     return new PageDto(entities, pageMetaDto);
   }

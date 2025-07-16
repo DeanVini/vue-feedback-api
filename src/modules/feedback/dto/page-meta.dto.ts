@@ -12,12 +12,15 @@ export class PageMetaDto {
 
   readonly hasNextPage: boolean;
 
-  constructor({ page, limit, itemCount }) {
+  readonly averageRating: number;
+
+  constructor({ page, limit, itemCount, averageRating }) {
     this.page = page;
     this.limit = limit;
     this.itemCount = itemCount;
     this.pageCount = Math.ceil(this.itemCount / this.limit);
     this.hasPreviousPage = this.page > 1;
     this.hasNextPage = this.page < this.pageCount;
+    this.averageRating = averageRating || 0;
   }
 }
