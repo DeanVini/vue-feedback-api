@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { FeedbackService } from './feedback.service';
 import { NewFeedbackDto } from './dto/new-feedback.dto';
 import { UpdateFeedbackDto } from './dto/update-feedback.dto';
@@ -25,5 +25,10 @@ export class FeedbackController {
   @Patch(':id')
   async update(@Param('id') id: number, @Body() updateFeedbackDto: UpdateFeedbackDto) {
     return this.feedbackService.update(id, updateFeedbackDto)
+  }
+
+  @Delete(':id')
+  async delete(@Param('id') id: number) {
+    return this.feedbackService.remove(id);
   }
 }

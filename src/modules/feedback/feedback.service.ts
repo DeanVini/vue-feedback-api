@@ -46,4 +46,8 @@ export class FeedbackService {
 
     await this.entityManager.save(feedback);
   }
+
+  async remove(id: number) {
+    await this.feedbackRepository.delete(id);
+  }
 }
