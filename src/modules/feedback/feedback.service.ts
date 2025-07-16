@@ -4,6 +4,8 @@ import { NewFeedbackDto } from './dto/new-feedback.dto';
 import { Feedback } from './entities/feedback.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UpdateFeedbackDto } from './dto/update-feedback.dto';
+import { PageMetaDto } from './dto/page-meta.dto';
+import { PageDto } from './dto/page.dto';
 
 @Injectable()
 export class FeedbackService {
@@ -18,8 +20,20 @@ export class FeedbackService {
     await this.entityManager.save(feedback);
   }
 
-  async findAll(){
-    return this.feedbackRepository.find()
+  async findAll(limit: number = 10, page: number = 1) {
+    const query = this.feedbackRepository.createQueryBuilder('feedback')
+    const itemCount = await query.getCount()
+    const offset = Math.max(0, (page - 1) * limit);
+
+    query
+      .orderBy('feedback.createdAt')
+      .skip(offset)
+      .take(limit)
+
+    const { entities } = await query.getRawAndEntities()
+    const pageMetaDto = new PageMetaDto({ page, limit, itemCount });
+
+    return new PageDto(entities, pageMetaDto);
   }
 
   async findOne(id: number) {
