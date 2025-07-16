@@ -37,12 +37,11 @@ $ cp .env.example .env
 
 ```
 # Configuração do Banco de Dados
-DATABASE_HOST=localhost
-DATABASE_PORT=5432
-DATABASE_USER=postgres
-DATABASE_PASSWORD=sua_senha
-DATABASE_NAME=feedback_api
-DATABASE_SCHEMA=public
+POSTGRES_HOST=localhost
+POSTGRES_PORT=5432
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=sua_senha
+POSTGRES_DATABASE=feedback_api
 
 # Outras configurações da aplicação
 PORT=3000

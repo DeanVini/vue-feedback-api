@@ -26,7 +26,7 @@ export class FeedbackService {
     const offset = Math.max(0, (page - 1) * limit);
 
     query
-      .orderBy('feedback.createdAt')
+      .orderBy('feedback.createdAt', 'DESC')
       .skip(offset)
       .take(limit)
 
