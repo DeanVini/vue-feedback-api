@@ -13,6 +13,7 @@ import { ConfigService } from '@nestjs/config';
         password: configService.getOrThrow('POSTGRES_PASSWORD'),
         database: configService.getOrThrow('POSTGRES_DATABASE'),
         autoLoadEntities: true,
+        synchronize: true, //remover em produção
       }),
       inject: [ConfigService]
     })
