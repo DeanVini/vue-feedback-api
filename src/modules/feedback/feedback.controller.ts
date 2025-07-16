@@ -14,7 +14,6 @@ export class FeedbackController {
 
   @Get()
   async findAll(@Query('limit') limit: number, @Query('page') page: number) {
-    console.log(`Fetching feedbacks with limit: ${limit}, page: ${page}`);
     return this.feedbackService.findAll(limit, page);
   }
 

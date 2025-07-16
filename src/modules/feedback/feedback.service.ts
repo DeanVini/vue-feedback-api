@@ -21,16 +21,14 @@ export class FeedbackService {
   }
 
   async findAll(limit: number = 10, page: number = 1) {
+    const skip = Math.max(0, (page - 1) * limit);
+
     const query = this.feedbackRepository.createQueryBuilder('feedback')
-    const itemCount = await query.getCount()
-    const offset = Math.max(0, (page - 1) * limit);
-
-    query
       .orderBy('feedback.createdAt', 'DESC')
-      .skip(offset)
       .take(limit)
+      .skip(skip);
 
-    const { entities } = await query.getRawAndEntities()
+    const [feedbacks, itemCount] = await query.getManyAndCount();
 
     const avgRatingResult = await this.feedbackRepository
       .createQueryBuilder('feedback')
@@ -43,7 +41,7 @@ export class FeedbackService {
 
     const pageMetaDto = new PageMetaDto({ page, limit, itemCount, averageRating });
 
-    return new PageDto(entities, pageMetaDto);
+    return new PageDto(feedbacks, pageMetaDto);
   }
 
   async findOne(id: number) {
